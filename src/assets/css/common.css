@@ -1,0 +1,130 @@
+html,body,#app,.content_container,ul,p,li,i{
+    height:100%;
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+i{
+    font-style: normal;
+}
+img{
+    vertical-align: middle;
+}
+
+/********************************************头部样式*************************************************/
+.header_container{
+    width:100%;
+    height:60px;
+    color:#fff;
+    background:#e54847;
+    position:relative;
+    text-align: center;
+    border-bottom:1px solid #eee;
+    box-sizing: border-box;
+}
+.header_title{
+    margin:0;
+    padding:0;
+    height:60px;
+    line-height:60px;
+    font-weight:normal;
+}
+
+/*******************************中间内容区域的样式**********************************/
+.main_body{
+    flex:1;
+}
+
+/*电影页面二级导航栏样式*/
+.main_menu{
+    width:100%;
+    height:44px;
+    border-bottom:1px solid #e6e6e6;
+    background:#fff;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*城市按钮样式*/
+.menu_city{
+    padding-left:15px;
+    color:#666;
+    font-size:15px;
+}
+.triangle{
+    display:inline-block;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: #ccc;
+    margin-left:3px;
+}
+/*热映部分样式*/
+.hot_switch{
+    display:flex;
+    height:100%;
+    line-height:44px;
+    font-size:15px;
+    font-weight:bold;
+    color:#777;
+}
+.hot_item{
+    width:80px;
+    line-height:44px;
+    margin:0 12px;
+}
+.hot_item.router-link-active{
+    color:#e54847;
+}
+/*搜索部分样式*/
+.search_entry{
+    height:100%;
+    line-height:44px;
+    margin-right:20px;
+}
+.search_entry i{
+    font-size:20px;
+    color:#e54847;
+}
+/*******************************tabbar样式**********************************/
+.tabbar_container{
+    width:100%;
+    position:fixed;
+    bottom:0;
+    left:0;
+    height:50px;
+    background:#fff;
+    border-top:2px solid #ebe8e3;
+}
+.tabbar_container ul{
+    height:50px;
+    display:flex;
+    align-items: center;
+    text-align: center;
+    padding:0;
+    margin:0;
+}
+.tabbar_container ul li.active{
+    color:#f03d37;
+}
+/*设置选中状态的按钮样式*/
+.tabbar_container ul li.router-link-active{
+    color:#f03d37;
+}
+.tabbar_container ul li{
+    flex:1;
+    height:40px;
+}
+.tabbar_container ul li i{
+        font-size:20px;
+}
+.tabbar_container ul li p{
+    line-height:18px;
+}
+
