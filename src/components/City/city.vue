@@ -1,20 +1,31 @@
 <template>
     <div class="city_container">
-        <div class="hotCity_container">
-            <h2>热门城市</h2>
-            <ul>
-                <li v-for="item in hotList"> {{item.nm}}</li>
-            </ul>
-        </div>
-        <div class="cityList_container">
-            <div class="city_list" ref="cityList_sort">
-                <div v-for="item in cityList">
-                    <h2>{{item.index}}</h2>
-                    <ul>
-                        <li v-for="i in item.list">{{i.nm}}</li>
-                    </ul>
+        <div class="city_list_hot">
+            <!--热门城市部分-->
+            <div class="hotCity_container">
+                <h2 class="city_title">热门城市</h2>
+                <ul>
+                    <li v-for="item in hotList"> {{item.nm}}</li>
+                </ul>
+            </div>
+            <!--城市列表部分-->
+            <div class="city_sort" ref="city_sort">
+                <div>
+                    <div v-for="item in cityList" class="city_all">
+                        <h2 class="city_title">{{item.index}}</h2>
+                        <ul>
+                            <li v-for="i in item.list">{{i.nm}}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!--城市索引部分-->
+        <div class="city_index">
+            <ul>
+                <li v-for="(item,index) in cityList" @touchstart="handleToIndex(index)">{{item.index}}</li>
+            </ul>
         </div>
     </div>
 </template>
@@ -31,10 +42,10 @@
         mounted(){
             this.$axios.get("/api/cityList")
                 .then((res)=>{
-                    let msg = res.data.msg;
+                    var msg = res.data.msg;
                     if(msg === "ok"){
-                        let cities = res.data.data.cities;
-                        let {cityList,hotList} = this.formatCityList(cities)
+                        var cities = res.data.data.cities;
+                        var {cityList,hotList} = this.formatCityList(cities)
                         this.cityList = cityList,
                         this.hotList = hotList
                         // console.log(cities)
@@ -43,29 +54,33 @@
         },
         methods:{
             formatCityList(cities){
-                let cityList = []
-                let hotList = []
+                var cityList = []
+                var hotList = []
 
                 // 热门城市的数据处理
-                for(let i=0;i<cities.length;i++){
+                for(var i=0;i<cities.length;i++){
                     if(cities[i].isHot == 1){
                         hotList.push(cities[i])
                         // console.log(11,hotList)
                     }
                 }
 
-                for(let i=0;i<cities.length;i++){
-                    let firstLetter = cities[i].py.substring(0,1).toUpperCase()
+                for(var i=0;i<cities.length;i++){
+                    var firstLetter = cities[i].py.substring(0,1).toUpperCase()
+                    // cityList里面没有该索引字母多的话，就新添加进cityList
                     if(toCom(firstLetter)){
                         cityList.push({index:firstLetter,list:[{nm:cities[i].nm,id:cities[i].id}]})
                     }
                     else{
-                        for(let j=0;j<citiList.length;j++){
-                            cityList[j].list.push({nm:cities[i].nm,id:cities[i].id})
+                        // cityList里面已有该索引，就直接将城市信息push到list里面
+                        for(var j=0;j<cityList.length;j++){
+                            if(cityList[j].index === firstLetter){
+                                cityList[j].list.push({nm:cities[i].nm,id:cities[i].id})
+                            }
                         }
                     }
                 }
-
+                // 对索引字母进行排序
                 cityList.sort((n,m)=>{
                     if(n.index>m.index){
                         return 1;
@@ -77,22 +92,31 @@
 
                 })
 
+                // 判断cityList里面是否已有index，有的话，就不走这个判断；没有的话，就走下面的判断函数
                 function toCom(firstLetter){
-                    for(let i=0;i<cities.length;i++){
-                        if(cities[i].index == firstLetter){
+                    for(var i=0;i<cityList.length;i++){
+                        if(cityList[i].index === firstLetter){
                             return false;
                         }
-                        return true;
                     }
+                    return true;
                 }
 
-                console.log(cityList)
+                console.log(111,cityList)
+                // console.log(333,hotList)
 
+                // 将处理后的cityList和hotList返回
                 return {
                     cityList,
                     hotList
                 };
 
+            },
+
+            handleToIndex(index){
+                var h2 = this.$refs.city_sort.getElementsByTagName('h2');
+                this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop;
+                console.log(222,this.$refs.city_sort.parentNode)
             }
         }
     }
