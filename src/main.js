@@ -5,10 +5,12 @@ import store from './store'
 import "./assets/iconfont/iconfont.css"
 import "./assets/css/common.css"
 import axios from "axios"
+
 // import "lib-flexible/flexible.js"
 
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
+
 
 new Vue({
   router,

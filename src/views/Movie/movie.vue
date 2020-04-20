@@ -3,7 +3,7 @@
         <!--头部信息-->
         <Top title="喵喵电影"/>
         <!--内容区域-->
-        <div class="main_body">
+        <div class="main_body" id="content">
             <!--二级菜单部分-->
             <div class="main_menu">
                 <!--城市按钮-->
