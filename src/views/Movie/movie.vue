@@ -60,7 +60,7 @@
                                 window.localStorage.setItem("newNm",nm)
                                 window.localStorage.setItem("newId",id)
                                 window.location.reload();
-                                console.log(2);
+
                             }
                         });
                     })
