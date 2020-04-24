@@ -51,10 +51,11 @@
         watch:{
             message(newVal){
                 var that = this;
+                var cityId = this.$store.state.city.id
                 // 取消上一次请求
                 this.cancelRequest();
 
-                that.$axios.get("/api/searchList?cityId=10&kw=" +newVal,{
+                that.$axios.get('/api/searchList?cityId='+cityId+'&kw=' +newVal,{
                     cancelToken: new that.$axios.CancelToken(function(c) {
                         that.source = c;
                     })

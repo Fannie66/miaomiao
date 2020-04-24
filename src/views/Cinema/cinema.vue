@@ -16,21 +16,24 @@
             </div>
             <!--影院主体区域-->
             <div class="cinema_body">
-                <ul>
-                    <li v-for="item in cinemas">
-                        <div>
-                            <span>{{item.nm}}</span>
-                            <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
-                        </div>
-                        <div class="address">
-                            <span>{{item.addr}}</span>
-                            <span>{{item.distance}}</span>
-                        </div>
-                        <div class="card">
-                            <div v-for="(num,key) in item.tag" v-if="num === 1" :key="key" :class="key | classCard">{{key | formatCard}}</div>
-                        </div>
-                    </li>
-                </ul>
+                <Loading v-if="isLoading"/>
+                <Scroller v-else>
+                    <ul>
+                        <li v-for="item in cinemas">
+                            <div>
+                                <span>{{item.nm}}</span>
+                                <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
+                            </div>
+                            <div class="address">
+                                <span>{{item.addr}}</span>
+                                <span>{{item.distance}}</span>
+                            </div>
+                            <div class="card">
+                                <div v-for="(num,key) in item.tag" v-if="num === 1" :key="key" :class="key | classCard">{{key | formatCard}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </Scroller>
             </div>
         </div>
         <Tabbar/>
@@ -50,16 +53,23 @@
         },
         data(){
             return{
-                cinemas:[]
+                cinemas:[],
+                isLoading:true,
+                preCityId:-1
             }
         },
-        mounted(){
-            this.$axios.get("/api/cinemaList?cityId=10")
+        activated(){
+            var cityId = this.$store.state.city.id
+            if(this.preCityId === cityId) {return;}
+            this.isLoading = true;
+            this.$axios.get("/api/cinemaList?cityId=" +cityId)
                 .then((res)=>{
                     var msg = res.data.msg;
                     var cinemas = res.data.data.cinemas
                     if(msg == "ok"){
                         this.cinemas = cinemas
+                        this.isLoading = false
+                        this.preCityId = cityId
                     }
                     console.log(111,cinemas)
                 })

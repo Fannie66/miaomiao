@@ -8,7 +8,7 @@
             <div class="main_menu">
                 <!--城市按钮-->
                 <router-link tag="div" class="menu_city" to="/movie/city">
-                    <span>北京</span>
+                    <span>{{$store.state.city.nm}}</span>
                     <i class="triangle"></i>
                 </router-link>
                 <!--热映/上映部分-->
@@ -21,7 +21,6 @@
                     <i class="iconfont icon-sousuo"></i>
                 </router-link>
             </div>
-
             <!--使用<keep-alive>可以提高性能，浏览器可以将一部分内容进行缓存-->
             <keep-alive>
                 <router-view/>
@@ -29,19 +28,43 @@
         </div>
         <!--底部tabbar-->
         <Tabbar/>
+
     </div>
 </template>
 
 <script>
     import Top from "@/components/Top/top"
     import Tabbar from "@/components/TabBar/tabbar"
+    import {messageBox} from '@/components/JS'
 
 
     export default {
         name: "movie",
         components:{
             Top,
-            Tabbar
+            Tabbar,
+        },
+        mounted(){
+            setTimeout(()=>{
+                this.$axios.get("/api/getLocation")
+                    .then((res)=>{
+                        let msg = res.data.data.msg
+                        let nm = res.data.data.nm
+                        let id = res.data.data.id
+
+                        if(this.$store.state.city.id == id) {return;}
+                        messageBox({
+                            title: "城市定位",
+                            content: nm,
+                            handleOk() {
+                                window.localStorage.setItem("newNm",nm)
+                                window.localStorage.setItem("newId",id)
+                                window.location.reload();
+                                console.log(2);
+                            }
+                        });
+                    })
+            },2000)
         }
     }
 </script>
