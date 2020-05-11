@@ -4,9 +4,9 @@
         <Scroller v-else>
             <ul>
                 <li v-for="item in comingList">
-                    <div class="pic_show"><img :src="item.img.replace('w.h','128.180')"/></div>
+                    <div class="pic_show" @tap="handleToDetail(item.id)"><img :src="item.img.replace('w.h','128.180')"/></div>
                     <div class="info_list">
-                        <h2>{{item.nm}}<img v-if="item.version" src="@/assets/maxs.png"/></h2>
+                        <h2 @tap="handleToDetail(item.id)">{{item.nm}}<img v-if="item.version" src="@/assets/maxs.png"/></h2>
                         <p><span class="person">{{item.wish}}</span>人想看</p>
                         <p>主演:{{item.star}}</p>
                         <p>{{item.rt}}上映</p>
@@ -45,6 +45,11 @@
                         // console.log(111,comingList)
                     }
                 })
+        },
+        methods:{
+            handleToDetail(movieId){
+                this.$router.push("/movie/detail/2/"+movieId)
+            }
         }
     }
 </script>

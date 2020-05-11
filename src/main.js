@@ -7,7 +7,11 @@ import "./assets/css/common.css"
 import axios from "axios"
 import Scroller from "./components/Scroller/scroller"
 import Loading from "./components/Loading/loading"
-
+// import VueAwesomeSwiper from 'vue-awesome-swiper'
+// // import style
+// import 'swiper/css/swiper.css'
+//
+// Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 // import "lib-flexible/flexible.js"
 
 Vue.prototype.$axios = axios
