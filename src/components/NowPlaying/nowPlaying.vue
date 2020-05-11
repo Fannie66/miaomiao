@@ -5,9 +5,9 @@
             <ul>
                 <li class="pullDown">{{pullDown}}</li>
                 <li v-for="item in movieList">
-                    <div class="pic_show" @tap="handleToDetail"><img :src="item.img.replace('w.h','128.180')"/></div>
+                    <div class="pic_show" @tap="handleToDetail(item.id)"><img :src="item.img.replace('w.h','128.180')"/></div>
                     <div class="info_list">
-                        <h2>{{item.nm}}<img v-if="item.version" src="@/assets/maxs.png"/></h2>
+                        <h2 @tap="handleToDetail(item.id)" >{{item.nm}}<img v-if="item.version" src="@/assets/maxs.png"/></h2>
                         <p>观众评<span class="grade">{{item.sc}}</span></p>
                         <p>主演:{{item.star}}</p>
                         <p>{{item.showInfo}}</p>
@@ -41,7 +41,7 @@
             var cityId = this.$store.state.city.id
             if(this.preCityId === cityId) {return;}
             this.isLoading = true;
-            console.log(123)
+            // console.log(123)
             this.$axios.get("/api/movieOnInfoList?cityId=" +cityId)
                 .then((data)=>{
                     var msg = data.data.msg
@@ -81,8 +81,9 @@
                 })
         },
         methods:{
-            handleToDetail(){
-                console.log("handleToDetail")
+            handleToDetail(movieId){
+                console.log(movieId)
+                this.$router.push("/movie/detail/1/"+movieId)
             },
             handleToScroll(pos){
                 if(pos.y > 30){

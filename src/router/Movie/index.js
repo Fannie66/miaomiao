@@ -28,6 +28,26 @@ export default {
             component: () => import("@/components/ComingSoon/comingSoon"),
         },
         {
+            path:"detail/1/:movieId",
+            components: {
+                // default:()=>import ("@/components/NowPlaying/nowPlaying"),
+                detail:()=>import ("@/views/Movie/detail")
+            },
+            props:{
+                detail:true
+            }
+        },
+        {
+            path:"detail/2/:movieId",
+            components: {
+                // default:()=>import ("@/components/ComingSoon/comingSoon"),
+                detail:()=>import ("@/views/Movie/detail")
+            },
+            props:{
+                detail:true
+            }
+        },
+        {
             path:"/movie",
             redirect:"/movie/nowPlaying"
         }

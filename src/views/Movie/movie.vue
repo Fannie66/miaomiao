@@ -28,7 +28,7 @@
         </div>
         <!--底部tabbar-->
         <Tabbar/>
-
+        <router-view name="detail" />
     </div>
 </template>
 
